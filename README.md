@@ -42,6 +42,7 @@ $$
 $$
 h{\left(x \right)} = \sqrt{x}
 $$
+（在GitHub中可查看转换后的效果）
 ```
 
 
