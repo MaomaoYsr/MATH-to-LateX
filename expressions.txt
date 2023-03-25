@@ -1,0 +1,3 @@
+f(x)=2*ln(x)
+g(x)=x^2- 5x + 6
+h(x)=sqrt(x)
