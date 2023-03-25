@@ -2,7 +2,7 @@
 
 - update 03-25 version 1.0
 
-本教程将向您详细介绍如何使用我们之前为您编写的Python脚本`math_to_latex.py`来将数学表达式转换为LaTeX代码并生成Markdown文档。
+本教程将向您详细介绍如何使用Python脚本`math_to_latex.py`来将数学表达式转换为LaTeX代码并生成Markdown文档。
 
 ## 环境准备
 1.安装Python 3：请确保您的计算机上安装了Python 3。您可以在这里下载和安装Python 3：https://www.python.org/downloads/
