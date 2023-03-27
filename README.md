@@ -1,8 +1,23 @@
 # 数学表达式转LaTeX文档教程
 
-- update 03-25 version 1.0
+- update 03-27 version 1.1
 
 本教程将向您详细介绍如何使用Python脚本[`math_to_latex.py`](https://github.com/MaomaoYsr/MATH-to-LateX/blob/main/math_to_latex.py)来将数学表达式转换为LaTeX代码并生成Markdown文档。
+
+
+### 更新日志
+
+#### 版本 1.1 - 2023-03-27
+1. **注释支持**：现在您可以在输入文件 `expressions.txt` 中的数学表达式后添加注释。注释需要在表达式后紧跟一个 `#` 符号，然后在该符号后写下您的注释内容。
+
+2. **扩展数学类型支持**：脚本现在支持偏导数、导数和积分。您可以使用 `partial`、`prime` 和 `integrate` 作为前缀。
+
+3. **兼容性优化**：脚本现在将 '^' 替换为 '**'，以便与 Sympy 库兼容。
+
+4. **错误提示**：脚本现在会在遇到错误时打印详细的错误信息，以便于用户识别问题所在。
+
+
+
 
 ## 环境准备
 1.安装Python 3：请确保您的计算机上安装了Python 3。您可以在这里下载和安装Python 3：https://www.python.org/downloads/
@@ -18,11 +33,14 @@ pip install markdown
 ## 使用方法
 1.准备输入文件：创建一个名为`expressions.txt`的文本文件，将您要转换的数学表达式逐行输入。每个表达式单独占据一行。
 
+现在您可以在表达式后面添加注释。注释需要在表达式后紧跟一个`#`符号，然后在该符号后写下您的注释内容。
+
+
 例如：
 ```
-f(x)=2*ln(x)
-g(x)=x^2 - 5x + 6
-h(x)=sqrt(x)
+f(x)=2*ln(x) # 对数函数
+g(x)=x^2 - 5x + 6 # 二次函数
+h(x)=sqrt(x) # 平方根函数
 ```
 2.运行脚本：双击`math_to_latex.py`脚本或在命令行中运行`python math_to_latex.py`。
 
@@ -54,7 +72,16 @@ $$
 - 算术表达式：如 2 * (x - 3) / (x + 1)。
 - 常见数学运算符：加（+）、减（-）、乘（*）、除（/）、指数（^或**）等。
 - 常见数学函数：如sin(x)、cos(x)、tan(x)、ln(x)、log(x)（以10为底的对数）、sqrt(x)（平方根）等。
+- 偏导数、导数和积分：脚本现在支持偏导数、导数和积分。您可以使用 `partial`、`prime` 和 `integrate` 作为前缀。
+   - 例如：
+          
+          
+            y = x^2 + 2x # 定义一个函数
+            y_prime = prime(y) # 计算导数
+            y_partial_x = partial(y, x) # 计算偏导数
+            integral_y = integrate(y, x) # 计算积分
 
+          
 ## 注意事项
 
 1. 在渲染Markdown的应用程序或网站上，您可能需要启用MathJax以正确显示LaTeX数学公式。
