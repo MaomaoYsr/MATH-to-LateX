@@ -7,11 +7,33 @@ def read_math_expressions(file_path):
         lines = file.readlines()
     expressions = [line.strip() for line in lines if line.strip()]
     return expressions
+
+
 def parse_expression_and_comment(expression):
-    parts = expression.split('#')
-    expr = parts[0].strip()
-    comment = parts[1].strip() if len(parts) > 1 else ''
-    return expr, comment
+    if '#' in expression:
+        expr, comment = expression.split('#', 1)
+        return expr.strip(), comment.strip()
+    else:
+        return expression.strip(), ""
+
+def process_expression(expr):
+    x = sympy.Symbol('x')
+    y = sympy.Function('y')(x)
+    y_prime = y.diff(x)
+    y_partial_x = y.diff(x)
+    integral_y = sympy.integrate(y, x)
+    processed_expr = {
+        'y': y,
+        'y_prime': y_prime,
+        'y_partial_x': y_partial_x,
+        'integral_y': integral_y
+    }.get(expr, None)
+
+    if processed_expr is None:
+        raise ValueError(f"Expression '{expr}' is not recognized")
+
+    return processed_expr
+
 
 def convert_to_latex(expressions):
     latex_expressions = []
@@ -22,27 +44,8 @@ def convert_to_latex(expressions):
             expr = expr.replace('^', '**')
             # Insert explicit multiplication between a number and a variable
             expr = re.sub(r'(\d)([a-zA-Z\(])', r'\1*\2', expr)
-            # Replace derivatives, partial derivatives, and integrals with proper syntax
-            expr = (
-                expr.replace("partial", "diff")
-                .replace("prime", "'")
-                .replace("integrate", "Integral")
-            )
-            if '=' in expr:
-                lhs, rhs = expr.split('=')
-                if '(' in lhs and ')' in lhs:
-                    # Handle function definition
-                    func_var, arg = lhs.split('(')
-                    arg = arg.strip(')')
-                    sympy_func = sympy.Function(func_var)(sympy.Symbol(arg))
-                    sympy_rhs = sympy.sympify(rhs)
-                    sympy_expr = sympy.Eq(sympy_func, sympy_rhs)
-                else:
-                    # Handle equations
-                    sympy_expr = sympy.Eq(sympy.sympify(lhs), sympy.sympify(rhs))
-            else:
-                # Handle expressions
-                sympy_expr = sympy.sympify(expr)
+
+            sympy_expr = process_expression(expr.split('=')[0].strip())
             latex_code = sympy.latex(sympy_expr)
             latex_code = latex_code.replace('log', 'ln')  # Replace 'log' with 'ln'
             latex_expressions.append(latex_code)
@@ -52,15 +55,18 @@ def convert_to_latex(expressions):
 
 
 
+
 def create_markdown(latex_expressions, output_file):
     with open(output_file, 'w', encoding='utf-8') as file:
         for latex_expr in latex_expressions:
             file.write(f'$$\n{latex_expr}\n$$\n\n')
 
+
 def main(input_file='expressions.txt', output_file='output.md'):
     expressions = read_math_expressions(input_file)
     latex_expressions = convert_to_latex(expressions)
     create_markdown(latex_expressions, output_file)
+
 
 if __name__ == "__main__":
     main()
