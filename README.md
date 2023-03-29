@@ -1,6 +1,6 @@
 # 数学表达式转LaTeX文档教程
 
-- update 03-27 version 1.1
+- update 03-29 version 1.15
 
 本教程将向您详细介绍如何使用Python脚本[`math_to_latex.py`](https://github.com/MaomaoYsr/MATH-to-LateX/blob/main/math_to_latex.py)来将数学表达式转换为LaTeX代码并生成Markdown文档。
 
@@ -16,7 +16,7 @@
 
 4. **错误提示**：脚本现在会在遇到错误时打印详细的错误信息，以便于用户识别问题所在。
 
-
+5. **Bug 修复** 对程序进行改进，修复了部分表达式无法运行程序的bug
 
 
 ## 环境准备
